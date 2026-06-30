@@ -17,3 +17,4 @@ const db = {
     ],
     transactions: []
 };
+module.exports = { db };

@@ -6,6 +6,13 @@ const { enquere, enqueue } = require('./queue');
 const app = express();
 const PORT = 3000;
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
 app.use(express.json());
 
 //Rota listar contas
@@ -52,6 +59,10 @@ app.post('/transactions', (req, res) => {
         message: "Transação recebida e enviada para processamento.",
         transaction: transactionBlock
     });
+});
+
+app.get('/', (req, res) => {
+  res.send('O servidor está rodando perfeitamente!');
 });
 
 app.listen(PORT, () => {

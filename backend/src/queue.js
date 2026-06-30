@@ -1,10 +1,10 @@
-const db = require("./database");
+const {db} = require('./database');
 const queue = [];
 let isProcessing = false;
 
 function enqueue(transactionsBlock) {
     queue.push(transactionsBlock);
-    console.log(`[QUEUE] Nova Transação ${transactionsBlock.transactionId} adicionada à fila.`);
+    console.log(`[QUEUE] Nova Transação de ${transactionsBlock.type} no valor de R$${transactionsBlock.amount} adicionada à fila.`);
     processQueue();
 };
 
@@ -17,7 +17,7 @@ async function processQueue() {
     isProcessing = true;
 
     const currentBlock = queue.shift();
-    console.log(`[QUEUE] Processando transação ${currentBlock.transactionId}...`);
+    console.log(`[QUEUE] Processando transação ${currentBlock.type}...`);
 
     try {
         await new Promise(resolve => setTimeout(resolve, 1000));
