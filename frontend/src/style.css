@@ -51,15 +51,6 @@ body {
   color: var(--roxo-escuro);
 }
 
-.badge {
-  font-size: 12px;
-  background: var(--roxo-base);
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 6px;
-  vertical-align: middle;
-}
-
 .account-selector select {
   padding: 8px 12px;
   border-radius: 8px;
@@ -94,7 +85,7 @@ body {
   padding: 30px;
   border-radius: 12px;
   color: white;
-  box-shadow: 0 10px 15px -3px rgba(150, 68, 227, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(150, 68, 227, 0.15);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -118,10 +109,19 @@ body {
   padding: 25px;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  min-height: 330px; 
+  display: flex;
+  flex-direction: column;
 }
 
-.operation-card h3 { margin: 0 0 20px 0; color: var(--texto-escuro); border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
-.transaction-form { display: flex; flex-direction: column; gap: 15px; }
+.transaction-form { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 15px; 
+  flex-grow: 1; 
+  justify-content: space-between; 
+}
+
 .form-group { display: flex; flex-direction: column; gap: 6px; }
 .form-group label { font-weight: 600; color: var(--texto-mutado); font-size: 14px; }
 
@@ -183,3 +183,50 @@ body {
 .status-badge.success { background: var(--bg-sucesso); color: var(--texto-sucesso); }
 .status-badge.failed { background: var(--bg-falha); color: var(--texto-falha); }
 .reason-text { color: #a1a1aa; font-size: 13px; }
+
+.agilize-logo {
+  color: var(--roxo-escuro);
+  display: block;
+}
+
+.badge {
+  font-size: 11px;
+  background: var(--roxo-base);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+}
+
+.agilize-icon {
+  color: var(--roxo-base);
+  display: block;
+}
+
+.brand-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--texto-escuro);
+  letter-spacing: -0.5px;
+}
+
+.account-type-badge {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: rgba(255, 255, 255, 0.2); 
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  align-self: flex-start; 
+  margin-bottom: 12px;   
+  text-transform: uppercase;
+}
