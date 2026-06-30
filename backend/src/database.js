@@ -17,4 +17,4 @@ const db = {
     ],
     transactions: []
 };
-module.exports = { db };
+module.exports =  db ;

@@ -1,38 +1,7 @@
-const {db} = require('./database');
+const db = require('./database');
+
 const queue = [];
 let isProcessing = false;
-
-function enqueue(transactionsBlock) {
-    queue.push(transactionsBlock);
-    console.log(`[QUEUE] Nova Transação de ${transactionsBlock.type} no valor de R$${transactionsBlock.amount} adicionada à fila.`);
-    processQueue();
-};
-
-async function processQueue() {
-    if(isProcessing) return;
-    if(queue.length === 0){
-        return;
-    }
-
-    isProcessing = true;
-
-    const currentBlock = queue.shift();
-    console.log(`[QUEUE] Processando transação ${currentBlock.type}...`);
-
-    try {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        executeTransaction(currentBlock);
-
-    } catch (error) {
-        console.error(`[QUEUE] Erro crítico ao processar bloco:`, error);
-        currentBlock.status = "FAILED";
-        currentBlock.failureReason = "Erro interno no processamento.";
-        db.transactions.push(currentBlock);
-    } finally {
-    isProcessing = false;
-    processQueue();
-  }
-};
 
 function executeTransaction(block) {
     const originAccount = db.accounts.find(acc => acc.id === block.accountOriginId);
@@ -64,6 +33,9 @@ function executeTransaction(block) {
         block.failureReason = originAccount.type === "CORRENTE"
             ? "Saldo e limite de cheque especial insuficientes." 
             : "Saldo insuficiente (Poupança não pode ficar negativa).";
+
+        db.transactions.push(block);
+        return;
     }
 
     //Logica por operação
@@ -97,6 +69,37 @@ function executeTransaction(block) {
         console.log(`[SUCCESS] Saque de R$ ${block.amount} concluído na conta ${originAccount.id} para a conta ${destinationAccount.id} concluída.`);
         return;
     }
+};
+
+function enqueue(transactionsBlock) {
+    queue.push(transactionsBlock);
+    console.log(`[QUEUE] Nova Transação de ${transactionsBlock.type} no valor de R$${transactionsBlock.amount} adicionada à fila.`);
+    processQueue();
+};
+
+async function processQueue() {
+    if(isProcessing) return;
+    if(queue.length === 0)return;
+
+    isProcessing = true;
+
+    const currentBlock = queue.shift();
+    console.log(`[QUEUE] Processando transação ${currentBlock.type}...`);
+
+    try {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        executeTransaction(currentBlock);
+
+    } catch (error) {
+        console.error(`[QUEUE] Erro crítico ao processar bloco:`, error);
+        currentBlock.status = "FAILED";
+        currentBlock.failureReason = "Erro interno no processamento.";
+        db.transactions.push(currentBlock);
+    } finally {
+    isProcessing = false;
+    processQueue();
+  }
 };
 
 module.exports = { enqueue };
