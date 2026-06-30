@@ -1,61 +1,37 @@
-# Desafio Técnico — Banco 🏦
+# ⚡ AgilBank - Desafio Técnico
 
-Bem-vindo(a) ao desafio técnico do **Processo Seletivo Agilize — Estágio em Tecnologia**!
+Uma aplicação bancária completa com arquitetura desacoplada (API Backend + Interface Frontend) construída para o desafio técnico da Agilize. O projeto simula operações de saque e transferência gerenciadas por uma **fila assíncrona baseada em concorrência na memória**, aplicando regras específicas de tarifas e limites para Contas Correntes e Poupanças.
 
-Este desafio avalia sua capacidade de transformar **regras de negócio** em um sistema **fullstack**
-funcional, bem organizado e fácil de executar.
-
-> 📄 **A especificação completa está no arquivo [`ESPECIFICACAO.pdf`](./ESPECIFICACAO.pdf).** Leia-a com atenção antes de começar.
->
-> ⏰ **Prazo:** 2 dias corridos — entrega até **00h de 30/06**.
+## 🏗️ Diferenciais Implementados
+* **Arquitetura Baseada em Fila (Queue):** Evita condições de corrida (race conditions) isolando as requisições em um processador sequencial FIFO com trava de estado (`isProcessing`).
+* **Design Agilize:** Me senti livre para está utilizando a paleta de cores institucional e os vetores oficiais da marca.
+* **polling de Histórico:** O frontend atualiza saldos e o extrato a cada 3 segundos automaticamente para refletir as transações processadas de forma assíncrona.
 
 ---
 
-## 🎯 Resumo
+## 🛠️ Como Executar o Projeto (Passo a Passo)
 
-Construa um **Banco** sobre dois tipos de conta (corrente e poupança), respeitando as regras de negócio
-da especificação. A operação **obrigatória** é o **saque**; a **transferência** é **opcional** e conta
-como diferencial.
+Certifique-se de ter o **Node.js** instalado em sua máquina. O projeto roda completamente em memória, dispensando configurações de bancos de dados externos.
 
-A solução deve ter **duas partes que se comunicam**:
+### 1. Inicializando o Backend (API)
+Abra um terminal na raiz do projeto e execute:
+```bash
+# Entrar na pasta do servidor
+cd backend
 
-- **Backend (API):** expõe uma API HTTP com as operações (toda a regra de negócio fica aqui).
-- **Frontend:** uma interface web que consome a API e permite realizar as operações e ver os resultados.
+# Instalar as dependências
+npm install
 
-## 💻 Linguagens aceitas (backend)
+# Iniciar o servidor em modo de desenvolvimento
+npm run dev
 
-`JavaScript (Node.js)` · `TypeScript (Node.js)` · `Python` · `Ruby` · `PHP` · `Go`
+### 2. Inicializando o Frontend (Interface)
+Bash
+# Entrar na pasta da interface
+cd frontend
 
-> O **frontend** pode usar HTML/CSS/JavaScript, com ou sem framework.
+# Instalar as dependências
+npm install
 
----
-
-## 🚀 Como participar
-
-1. Faça um **fork** deste repositório.
-2. Implemente **backend** e **frontend** no fork (backend em uma das linguagens aceitas).
-3. **Preencha o README** do seu fork seguindo o modelo em [`SUBMISSION.md`](./SUBMISSION.md)
-   (linguagem, pré-requisitos e **passo a passo para subir backend e frontend**).
-4. Faça **commits ao longo do desenvolvimento** — evite um único commit gigante no final.
-5. Envie o **link do seu fork** para **calison@agilize.com.br**.
-
----
-
-## ⚠️ Critério eliminatório
-
-> Projetos que **não executarem** seguindo o README — ou cujo README não permita rodar **backend e
-> frontend** — serão **eliminados**. Backend fora das linguagens aceitas também elimina.
->
-> **Teste o passo a passo em uma máquina/pasta limpa antes de enviar.**
-
----
-
-## ✅ O que será avaliado
-
-- **Funcionamento** — backend e frontend rodam, se comunicam e cumprem as regras de negócio.
-- **Qualidade do código** — clareza, organização, separação de responsabilidades, sem duplicação.
-- **Processo** — histórico de commits coerente e README claro.
-
-Dúvidas: **calison@agilize.com.br**
-
-Boa sorte! 🍀
+# Iniciar o servidor do Vite
+npm run dev
