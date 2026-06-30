@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, computed } from 'vue'
   import axios from 'axios'
 
   const api = axios.create({
@@ -41,6 +41,13 @@
       console.error("Erro ao buscar transações:", error)
     }
   }
+
+  const filteredTransactions = computed(() => {
+    return transactions.value.filter(t => 
+      t.accountOriginId === selectedAccountId.value || 
+      t.accountDestinationId === selectedAccountId.value
+    );
+  });
 
   const handleTransaction = async () => {
     successMessage.value = ''
@@ -181,7 +188,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="t in transactions" :key="t.transactionId">
+            <tr v-for="t in filteredTransactions" :key="t.transactionId">
               <td>{{ new Date(t.timestamp).toLocaleTimeString() }}</td>
               <td>
                 <span class="type-badge" :class="t.type.toLowerCase()">{{ t.type }}</span>
